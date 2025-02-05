@@ -1,0 +1,11 @@
+{
+  "name": "trello-api",
+  "version": "1.0.0",
+  "description": "t2t.lab",
+  "main": "src/server.js",
+  "author": "Thiet Truong",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
