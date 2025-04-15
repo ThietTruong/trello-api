@@ -1,9 +1,13 @@
 import express from 'express';
-import { CONNECT_TO_MONGODB, GET_DB_INSTANCE } from './config/mongodb.js';
+import exitHook from 'async-exit-hook';
+import { CONNECT_TO_MONGODB, GET_DB_INSTANCE, CLOSE_DB } from './config/mongodb.js';
+import { env } from './config/environment.js';
 
 const app = express();
 const hostname = '127.0.0.1';
-const port = process.env.PORT || 5555;
+const port =  env.PORT || 5555;
+
+console.log("ENV", env.APP_HOST)
 
 const START_SERVER = async () => {
   app.get('/', async (req, res) => {
@@ -13,6 +17,12 @@ const START_SERVER = async () => {
   });
   app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}`);
+    exitHook(()=>{
+      console.log(`Server stopping`);
+      CLOSE_DB;
+      console.log(`Server stopped`);
+
+    })
   });
 };
 (async () => {
