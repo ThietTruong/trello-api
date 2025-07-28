@@ -1,12 +1,11 @@
 import Joi from "joi";
 import { StatusCodes } from "http-status-codes";
+import ApiError from "../utils/apiError.js";
 
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
     title: Joi.string().required().min(3).max(50).trim().strict(),
     description: Joi.string().required().min(3).max(256).trim().strict(),
-    name: Joi.string().required().min(3).max(50).trim().strict(),
-    email: Joi.string().required().email().trim().strict(),
   });
 
   try {
@@ -16,16 +15,12 @@ const createNew = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
-    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-      error: new Error(error).message,
-      timestamp: new Date(),
-    });
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message)
+    );
   }
 };
 
 export const boardValidation = {
   createNew,
 };
-
-// File content was just a comment block that has been removed
