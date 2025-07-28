@@ -1,0 +1,26 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": "commonjs"
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "~": "./src"
+        },
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    "@babel/plugin-transform-runtime"
+  ]
+}

@@ -1,9 +1,14 @@
-import Joi from "joi";
-import { StatusCodes } from "http-status-codes";
-import ApiError from "../utils/apiError.js";
+import Joi from 'joi';
+import { StatusCodes } from 'http-status-codes';
+import ApiError from '../utils/apiError.js';
+import {
+  OBJECT_ID_RULE,
+  OBJECT_ID_RULE_MESSAGE,
+} from '../validations/validator.js';
 
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
+    _id: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
     title: Joi.string().required().min(3).max(50).trim().strict(),
     description: Joi.string().required().min(3).max(256).trim().strict(),
   });
